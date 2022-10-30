@@ -2,6 +2,7 @@ package com.springboot.helloprac.dao;
 
 
 import com.springboot.helloprac.domain.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -20,14 +21,26 @@ public class UserDao {
         this.jt = jt;
     }
 
-    public void add(User user) {
-        this.jt.update("insert into users(id, name, password) values (?, ?, ?)",
+//    public void add(User user) {
+//        this.jt.update("insert into users(id, name, password) value (?, ?, ?)",
+//                user.getId(), user.getName(), user.getPassword());
+//    }
+
+    public int add(User user) {
+        return this.jt.update("insert into users(id, user, password) value (?, ?, ?)",
                 user.getId(), user.getName(), user.getPassword());
     }
 
-    public void deleteAll() {
-        this.jt.update("delete from users");
+
+
+//    public void deleteAll() {
+//        this.jt.update("delete from users");
+//    }
+
+    public int deleteAll() {
+        return this.jt.update("delete from users");
     }
+
 
     public User findById(String id) {
         String sql = "select * from users where id=?";
