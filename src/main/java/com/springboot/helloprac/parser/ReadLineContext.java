@@ -22,6 +22,7 @@ public class ReadLineContext<T> {
         BufferedReader reader = new BufferedReader(new FileReader(filename));
 
         String str;
+        reader.readLine();
         while((str= reader.readLine()) != null) {
             try {
                 result.add(parser.parse(str));
