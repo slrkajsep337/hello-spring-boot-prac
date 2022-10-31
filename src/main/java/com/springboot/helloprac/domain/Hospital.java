@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor //아무것도 받지 않는 생성자 추가
+@NoArgsConstructor //매개변수가 없는 생성자 추가
 public class Hospital {
     private int id;;
     private String openServiceName;
