@@ -4,7 +4,7 @@ import com.springboot.helloprac.domain.Hospital;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration //Singleton 보장
 public class ParserFactory {
 
     @Bean
