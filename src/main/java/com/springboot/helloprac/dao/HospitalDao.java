@@ -34,4 +34,10 @@ public class HospitalDao {
                 hospital.getTotalNumberOfBeds(),
                 hospital.getTotalAreaSize());
     }
+
+    public int getCount() {
+        String sql = "select count(id) from nation_wide_hospital;";
+        return this.jt.queryForObject(sql, Integer.class);
+        //queryForObject(a, b) :  a-sql문, b-반환받을 객체의 타입(e.g.) String- String.class)
+    }
 }
