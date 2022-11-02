@@ -1,5 +1,7 @@
 package com.springboot.helloprac.parser;
 
+
+import com.springboot.helloprac.HospitalService;
 import com.springboot.helloprac.dao.HospitalDao;
 import com.springboot.helloprac.domain.Hospital;
 import org.junit.jupiter.api.DisplayName;
@@ -21,55 +23,56 @@ class HospitalParserTest {
 
     @Autowired //매번 객체 생성을위해 new를 사용하지 않아도 된다 (singleton)
     ReadLineContext<Hospital> hospitalReadiLineContext;
-
     @Autowired
     HospitalDao hospitalDao;
+    @Autowired
+    HospitalService hs;
 
-    @Test
-    @DisplayName("Hospital이 insert, select, delete가 잘 되는지 ")
-    void addAndGet() {
-        hospitalDao.deleteAll();
-        assertEquals(0, hospitalDao.getCount());
-        HospitalParser hp = new HospitalParser();
-        Hospital hospital = hp.parse(line1);
-        hospitalDao.add(hospital);
-        assertEquals(1, hospitalDao.getCount());
+//    @Test
+//    @DisplayName("Hospital이 insert, select, delete가 잘 되는지 ")
+//    void addAndGet() {
+//        hospitalDao.deleteAll();
+//        assertEquals(0, hospitalDao.getCount());
+//        HospitalParser hp = new HospitalParser();
+//        Hospital hospital = hp.parse(line1);
+//        hospitalDao.add(hospital);
+//        assertEquals(1, hospitalDao.getCount());
+//
+//        Hospital selectedHspt = hospitalDao.findById(1);
+//        assertEquals(selectedHspt.getId(), hospital.getId());
+//        assertEquals(selectedHspt.getOpenServiceName(), hospital.getOpenServiceName());
+//        assertEquals(selectedHspt.getOpenLocalGovernmentCode(), hospital.getOpenLocalGovernmentCode());
+//        assertEquals(selectedHspt.getManagementNumber(), hospital.getManagementNumber());
+//        assertTrue(selectedHspt.getLicenseDate().isEqual(hospital.getLicenseDate()));
+//        assertEquals(selectedHspt.getBusinessStatus(), hospital.getBusinessStatus());
+//        assertEquals(selectedHspt.getBusinessStatusCode(), hospital.getBusinessStatusCode());
+//        assertEquals(selectedHspt.getPhone(), hospital.getPhone());
+//        assertEquals(selectedHspt.getFullAddress(), hospital.getFullAddress());
+//        assertEquals(selectedHspt.getRoadNameAddress(), hospital.getRoadNameAddress());
+//        assertEquals(selectedHspt.getHospitalName(), hospital.getHospitalName());
+//        assertEquals(selectedHspt.getBusinessTypeName(), hospital.getBusinessTypeName());
+//        assertEquals(selectedHspt.getHealthcareProviderCount(), hospital.getHealthcareProviderCount());
+//        assertEquals(selectedHspt.getPatientRoomCount(), hospital.getPatientRoomCount());
+//        assertEquals(selectedHspt.getTotalNumberOfBeds(), hospital.getTotalNumberOfBeds());
+//        assertEquals(selectedHspt.getTotalAreaSize(), hospital.getTotalAreaSize());
+//
+//
+//    }
 
-        Hospital selectedHspt = hospitalDao.findById(1);
-        assertEquals(selectedHspt.getId(), hospital.getId());
-        assertEquals(selectedHspt.getOpenServiceName(), hospital.getOpenServiceName());
-        assertEquals(selectedHspt.getOpenLocalGovernmentCode(), hospital.getOpenLocalGovernmentCode());
-        assertEquals(selectedHspt.getManagementNumber(), hospital.getManagementNumber());
-        assertTrue(selectedHspt.getLicenseDate().isEqual(hospital.getLicenseDate()));
-        assertEquals(selectedHspt.getBusinessStatus(), hospital.getBusinessStatus());
-        assertEquals(selectedHspt.getBusinessStatusCode(), hospital.getBusinessStatusCode());
-        assertEquals(selectedHspt.getPhone(), hospital.getPhone());
-        assertEquals(selectedHspt.getFullAddress(), hospital.getFullAddress());
-        assertEquals(selectedHspt.getRoadNameAddress(), hospital.getRoadNameAddress());
-        assertEquals(selectedHspt.getHospitalName(), hospital.getHospitalName());
-        assertEquals(selectedHspt.getBusinessTypeName(), hospital.getBusinessTypeName());
-        assertEquals(selectedHspt.getHealthcareProviderCount(), hospital.getHealthcareProviderCount());
-        assertEquals(selectedHspt.getPatientRoomCount(), hospital.getPatientRoomCount());
-        assertEquals(selectedHspt.getTotalNumberOfBeds(), hospital.getTotalNumberOfBeds());
-        assertEquals(selectedHspt.getTotalAreaSize(), hospital.getTotalAreaSize());
-
-
-    }
-
-    @Test
-    @DisplayName("10만건 초과 데이터가 파싱되는지 test")
-    void oneHundredthousandRows() throws IOException {
-        // 서버환경에서 build할 때 문제가 생길 수 있습니다.
-        // 어디에서든지 실행할 수 있게 짜는 것이 목표.
-        String filename = "/Users/leesuujeen/Desktop/fulldata_01_01_02_P_의원1.csv";
-        List<Hospital> hospitalList = hospitalReadiLineContext.readByLine(filename);
-        assertTrue(hospitalList.size()>10000);
-        assertTrue(hospitalList.size()>100000);
-        for (int i = 0; i < 10; i++) {
-            System.out.println(hospitalList.get(i).getHospitalName());
-        }
-        System.out.printf("파싱된 데이터 개수:", hospitalList.size());
-    }
+//    @Test
+//    @DisplayName("10만건 초과 데이터가 파싱되는지 test")
+//    void oneHundredthousandRows() throws IOException {
+//        // 서버환경에서 build할 때 문제가 생길 수 있습니다.
+//        // 어디에서든지 실행할 수 있게 짜는 것이 목표.
+//        String filename = "/Users/leesuujeen/Desktop/fulldata_01_01_02_P_의원1.csv";
+//        List<Hospital> hospitalList = hospitalReadiLineContext.readByLine(filename);
+//        assertTrue(hospitalList.size()>10000);
+//        assertTrue(hospitalList.size()>100000);
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println(hospitalList.get(i).getHospitalName());
+//        }
+//        System.out.printf("파싱된 데이터 개수:", hospitalList.size());
+//    }
 
     @Test
     @DisplayName("csv 한줄을 hospital로 잘 변경하는지 test")
@@ -97,5 +100,21 @@ class HospitalParserTest {
         assertEquals(0, hospital.getTotalNumberOfBeds()); //col:32
         assertEquals(52.29f, hospital.getTotalAreaSize()); //col:33
     }
+
+//    @Test
+//    @DisplayName("10만건 이상 데이터가 파싱 되는지")
+//    void oneHundreadThousandRows() throws IOException {
+//        // 서버환경에서 build할 때 문제가 생길 수 있습니다.
+//
+//        // 어디에서든지 실행할 수 있게 짜는 것이 목표.
+//        hospitalDao.deleteAll();
+//        String filename = "/Users/leesuujeen/Desktop/fulldata_01_01_02_P_의원1.csv";
+//        int cnt = this.hs.insertLargeVolumeHospitalData(filename);
+//        assertTrue(cnt > 1000);
+//        assertTrue(cnt > 10000);
+//        System.out.printf("파싱된 데이터 개수:%d", cnt);
+//    }
+
+
 
 }
