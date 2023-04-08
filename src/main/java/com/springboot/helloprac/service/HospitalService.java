@@ -1,4 +1,4 @@
-package com.springboot.helloprac;
+package com.springboot.helloprac.service;
 
 
 import com.springboot.helloprac.dao.HospitalDao;
